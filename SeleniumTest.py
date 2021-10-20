@@ -1,24 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+driver = webdriver.Chrome()
+driver.get("https://www.python.org")
 
-desired_cap = {
-'browserName': 'android',
-'device': 'Samsung Galaxy Note 9',
-'realMobile': 'true',
-'os_version': '8.1',
-'name': 'Bstack-[Python] Sample Test'
-}
+search_bar = driver.find_element_by_name("q")
+search_bar.clear()
+search_bar.send_keys("getting started with Selenium")
+search_bar.send_keys(Keys.RETURN)
 
-driver = webdriver.Remote(
-command_executor='https://<<user>>:<<user.keys>>@hub.browserstack.com:80/wd/hub',
-desired_capabilities=desired_cap)
-
-driver.get("https://www.google.com")
-if not "Google" in driver.title:
-    raise Exception("Unable to load google page!")
-elem = driver.find_element_by_name("q")
-elem.send_keys("BrowserStack")
-elem.submit()
-print (driver.title)
-driver.quit()
+print(driver.current_url)
+print(driver.window_handles)
+driver.close()
